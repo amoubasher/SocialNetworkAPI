@@ -29,4 +29,4 @@
   GitHub: [amoubasher](https://github.com/amoubasher)
   Email: [amoubasher@gmail.com](mailto:amoubasher@gmail.com)
   
-  ## [Video DEMO] (https://www.youtube.com/watch?v=vj7_AmUBbiI)
+  ## [Video DEMO](https://www.youtube.com/watch?v=vj7_AmUBbiI)
