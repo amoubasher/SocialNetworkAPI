@@ -1,6 +1,6 @@
 
 const router = require('express').Router();
-const { Thought, Reaction} = require('../../models')
+const { Thought, Reaction, User} = require('../../models')
 
 //TODO: ROUTE TO GET ALL THOUGHTS
 router.get('/', (req,res)=> {
@@ -10,17 +10,39 @@ router.get('/', (req,res)=> {
 })
 
 //TODO: ROUTE TO CREATE A NEW THOUGHT
-router.post('/', (req,res)=> {
-    Thought.create({
-        thoughtText: req.body.thoughtText,
-        username: req.body.username
-    }, (err, thought) => {
-        if (err) {
-            res.status(500).json(err)
-        } else {
-            res.status(200).json(`New thought posted!`)
+// router.post('/', (req,res)=> {
+//     Thought.create({
+//         thoughtText: req.body.thoughtText,
+//         username: req.body.username
+//     }, (err, thought) => {
+//         if (err) {
+//             res.status(500).json(err)
+//         } else {
+//             res.status(200).json(`New thought posted!`)
+//         }
+//     })
+// });
+
+router.post("/", async (req, res) => {
+  try {
+    const thought = await
+    Thought.create(
+req.body);
+      const user = await User.findOneAndUpdate(
+        {
+          _id: req.body.userId,
+        },
+        {
+          $push: { thoughts: thought._id },
+        },
+        {
+          new: true,
         }
-    })
+      );
+        res.status(200).json("thought created")} 
+        catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //TODO: ROUTE TO GET SINGLE THOUGHT BASED ON THOUGHT ID
@@ -35,8 +57,11 @@ router.get('/:thoughtId', (req,res)=> {
 })
 
 //TODO: ROUTE TO UPDATE A THOUGHT
-router.put('/', (req,res)=> {
-    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, (err, thought) => {
+router.put('/:thoughtId', (req,res)=> {
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+        { $set: req.body},
+        { runValidators: true, new: true },
+        (err, thought) => {
         if(err) {
             res.status(500).json(err)
         } else {

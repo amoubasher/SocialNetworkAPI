@@ -6,7 +6,7 @@ const {User} = require("../../models")
 router.get('/', (req,res)=> {
     User.find({}, (err, users) => {
         res.status(200).json(users)
-    })
+    }).populate("thoughts").populate("friends");
 })
 
 //TODO - ROUTE THAT CREATES A NEW USER
