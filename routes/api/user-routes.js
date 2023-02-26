@@ -53,7 +53,7 @@ router.delete('/:userId', (req,res)=> {
         if (err) {
             res.status(500).json(err)
         } else {
-            res.status(200).json(user)
+            res.status(200).json(`User ${user.username} deleted`)
         }
     })
 });
@@ -67,7 +67,7 @@ router.put('/:userId/friends/:friendId', (req,res)=> {
     ).then((user) => {
         !user
             ? res.status(404).json( {message: "user not found"} )
-            : res.status(200).json(user)
+            : res.status(200).json(`New Friend added!`)
     }).catch((err) => res.status(500).json(err))
 })
 
@@ -80,7 +80,7 @@ router.delete('/:userId/friends/:friendId', (req,res)=> {
   ).then((user) => {
     !user
       ? res.status(404).json({ message: "user not found" })
-      : res.status(200).json(user);
+      : res.status(200).json(`Friend deleted!`);
   }).catch((err) => res.status(500).json(err));
 });
 
